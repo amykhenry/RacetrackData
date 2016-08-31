@@ -15,6 +15,8 @@ all_transitions <- inner_join(all_data, next_year)
 # Here one could subset the data (for example filter(Year == 14) would take only the transitions observed 2014->2015)
 
 model_current_status <- multinom(StatusNext ~ as.factor(Status) + Empty + Dollar + Grass, data = all_transitions)
+stupid_model <- multinom(StatusNext ~ 1, data = all_transitions)
+exp(as.numeric(logLik(stupid_model)) / nrow(all_transitions))
 model_only_neigh <- multinom(StatusNext ~ Empty + Dollar + Grass, data = all_transitions)
 model_only_sign <- multinom(StatusNext ~ as.factor(Status) + I((Dollar) / (Grass + Dollar)), data = all_transitions)
 
